@@ -148,7 +148,10 @@ class PCA9685:
     @property
     def frequency(self):
         """The overall PWM frequency in Hertz."""
-        return self.reference_clock_speed / 4096 / self.prescale_reg
+        try:
+            return self.reference_clock_speed / 4096 / self.prescale_reg
+        except ZeroDivisionError:
+            return "Value of prescale_reg can't be zero."
 
     @frequency.setter
     def frequency(self, freq):
